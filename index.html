@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MAGIC 8 BALL</title>
+        <!-- links and imports -->
+        <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,400,700|Montserrat:400,700' rel='stylesheet' type='text/css'>
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js'></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+        <script src="/script.js" defer></script>
+    <!-- title -->
+        <style>
+        button{
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid white;
+            background-color: rgb(255, 80, 80);
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1.2em;
+            font-family: 'Helvetica Neue', arial;
+            font-weight: 100;
+            letter-spacing: 2px;
+            transition: .5s font-size;
+            position: relative;
+            left:1125px;
+            bottom:650px;
+        }
+        p#eight{
+            font-size: 62px;
+            position: relative;
+            color: white;
+            bottom: 570px;
+            left:500px;
+        }
+        p#answer{
+            font-size: 50px;
+            position: relative;
+            color: white;
+            bottom: 570px;
+            left:500px;
+        }
+        
+        </style>
+    </head>
+
+    <body style="background-color:#2885da"></body>
+        
+        <center><canvas height="900" width="1400" id="canvas"></canvas></center>
+        <script>
+            // creates a reference to canvas
+            const canvas = document.getElementById("canvas");
+            //hold reference to 2D contect of the canvas
+            const ctx = canvas.getContext('2d');
+            //choices
+            const choices = ["yes","no","ask again","maybe"];
+            var width = canvas.width;         
+            var height = canvas.height;
+            var rect = {
+                x: 1050,
+                y: 475,
+                w: 200,
+                h: 50,
+            };
+            function RandomChoice(){
+                let index = Math.floor(Math.random()*choices.length);
+                return choices[index];
+            }
+            function drawBall(){
+                var width = canvas.width;         
+                var height = canvas.height;
+                ctx.fillStyle = 'black';
+                ctx.beginPath();
+                ctx.arc(width/3,height/2,215, 0, 2*Math.PI);
+                ctx.fill();
+                //triangle
+                ctx.fillStyle = "rgb(0,100,255)";
+                var path=new Path2D();
+                path.moveTo((width/3)+150,height/2+70);
+                path.lineTo((width/3),(height/2)-170);
+                path.lineTo((width/3)-150,height/2+70);
+                ctx.fill(path);
+            }
+            function drawClouds( x, y, size,color){
+                ctx.fillStyle= color;
+                ctx.beginPath();
+                ctx.arc(x + size * 0.2, y + size * 0.2, size * 0.2, 0, Math.PI * 2);
+                ctx.arc(x + size * 0.4, y + size * 0.05, size * 0.22, 0, Math.PI * 2);
+                ctx.arc(x + size * 0.7, y + size * 0.2, size * 0.2, 0, Math.PI * 2);
+                ctx.arc(x + size * 0.9, y + size * 0.25, size * 0.15, 0, Math.PI * 2);
+                ctx.arc(x + size * 0.75, y + size * 0.33, size * 0.17, 0, Math.PI * 2);
+                ctx.arc(x + size * 0.5, y + size * 0.3, size * 0.25, 0, Math.PI * 2);
+                ctx.arc(x + size * 0.25, y + size * 0.3, size * 0.2, 0, Math.PI * 2);
+                ctx.arc(x + size *0.01, y + size * 0.27, size * 0.12, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.closePath();
+            }
+            function gradient(){
+                radius=0;
+                transparency=1;
+                ctx.beginPath();
+                for (let i = 0; i < 100; i++) {
+                // set the fill style to blue with decreasing opacity
+                ctx.fillStyle = "rgba(0, 0, 255,"+transparency +")";
+                
+                // draw the circle
+                ctx.beginPath();
+                ctx.arc(width/3, height/2, radius, 0, 2 * Math.PI);
+                ctx.fill();
+                
+                // increase the radius for the next circle
+                radius += 50;
+                transparency-=0.1;
+                }
+            }
+            function question(){
+                ctx.beginPath();
+                ctx.fillStyle='black';
+                ctx.font='48px serif';
+                ctx.textAlign = "center";
+                ctx.fillText("Ask the magic 8 ball",1150,height/2-48);
+                ctx.fillText("a question",1150,height/2);              
+            }
+            gradient();
+            drawClouds(220,250,300,"#a960fc");
+            drawClouds(150,500,350,"#a960fc");
+            drawClouds(500,500,250,"#a960fc");
+            drawClouds(700,350,150,"#a960fc");
+            drawClouds(650,200,100,"#a960fc");
+            drawClouds(500,400,250,"#a960fc");
+            drawClouds(750,300,100,"#e28bed");
+            drawClouds(150,400,200,"#e28bed");
+            drawClouds(500,200,150,"#e28bed");
+            drawClouds(400,600,250,"#e28bed");
+            drawClouds(450,220,250,"#e28bed");
+            drawClouds(600,350,200,"#e28bed");
+            drawBall();
+            question();
+            
+           var answer = document.getElementById("answer");
+           var eight = document.getElementById("eight");
+           var button = document.getElementById("button");
+           button.addEventListener("click", function(){
+                eight.InnerText = "";
+                answer.InnerText = RandomChoice();
+           });
+            
+        </script>
+        <div class="8ball">
+            <div class="answer">
+                <p id="eight">8</p>
+                <p id="answer"></p>
+                <script src="/script.js" defer></script>
+            </div>
+        </div>
+        <button id="button">
+            click here
+        </button>
+        
+    <!-- ball --
+        import a picture or create using html -->
+    <!-- button -->
+    <!-- footer -->
+    </body>
+</html>
